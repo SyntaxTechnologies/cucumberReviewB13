@@ -21,14 +21,24 @@ public class loginSteps {
 
         }
 
-    @When("user enters a valid username and password")
-    public void user_enters_a_valid_username_and_password() {
+//    @When("user enters a valid username and password")
+//    public void user_enters_a_valid_username_and_password() {
+//        WebElement usernameTextField = driver.findElement(By.id("txtUsername"));
+//        usernameTextField.sendKeys("admin");
+//        WebElement passwordTextField = driver.findElement(By.id("txtPassword"));
+//        passwordTextField.sendKeys("Hum@nhrm123");
+//
+//    }
+
+    @When("user enters a valid {string} and {string}")
+    public void user_enters_a_valid_and(String username, String password) {
         WebElement usernameTextField = driver.findElement(By.id("txtUsername"));
-        usernameTextField.sendKeys("admin");
+        usernameTextField.sendKeys(username);
         WebElement passwordTextField = driver.findElement(By.id("txtPassword"));
-        passwordTextField.sendKeys("Hum@nhrm123");
+        passwordTextField.sendKeys(password);
 
     }
+
     @When("click on login button")
     public void click_on_login_button() throws InterruptedException {
         WebElement loginButton = driver.findElement(By.id("btnLogin"));
@@ -44,6 +54,21 @@ public class loginSteps {
         Assert.assertEquals(actualText,expectedText);
 
     }
+
+
+    @When("user enters different {string} and {string} and verify the {string}")
+    public void user_enters_different_and_and_verify_the(String username, String password, String expectedError) {
+        WebElement usernameTextField = driver.findElement(By.id("txtUsername"));
+        usernameTextField.sendKeys(username);
+        WebElement passwordTextField = driver.findElement(By.id("txtPassword"));
+        passwordTextField.sendKeys(password);
+        WebElement loginButton = driver.findElement(By.id("btnLogin"));
+        loginButton.click();
+        WebElement errorMsg = driver.findElement(By.id("spanMessage"));
+        String actualError = errorMsg.getText();
+        Assert.assertEquals(actualError,expectedError);
+    }
+
 
 
 }
